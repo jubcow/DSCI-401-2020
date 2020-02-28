@@ -87,14 +87,43 @@ def spiral(n, end_corner):
         print("Incorrect input, end_corner must be between 1 and 4")
         return 0
         
-    print(mat, "\n")
+    print("Before:\n", mat, "\n")
     
-    while(cardinality == 'east' and mat[(curpos[0])(curpos[1])+1 == -1]):
-        curpos = mat[(curpos[0])(curpos[1])+1 == -1]
+    #TODO put this entire setup into a while loop that makes sure there are no '-1's in the matrix
+    #If we are going right, keep decrementing to the right until you hit the last col or a non -1
+    while(cardinality == 'east' and curpos[1]+1 != n and mat[(curpos[0]),(curpos[1])+1] == -1): 
+        curpos = ((curpos[0]),(curpos[1])+1)
         curnum -= 1
         mat[curpos] = curnum 
-    
-    print(mat, "\n")
+    #Change direction, TODO put this into a helper function to clean up code
+    if cardinality == 'east' and curpos[1]+1 == n:
+        cardinality = 'south'
+        
+    #If we are going south
+    while(cardinality == 'south' and curpos[0]+1 != n and mat[(curpos[0]+1),(curpos[1])] == -1): 
+        curpos = ((curpos[0])+1,(curpos[1]))
+        curnum -= 1
+        mat[curpos] = curnum 
+    if cardinality == 'south' and curpos[0]+1 == n:
+        cardinality = 'west'
+        
+    #If we are going west
+    while(cardinality == 'west' and curpos[1]-1 != -1 and mat[(curpos[0]),(curpos[1]-1)] == -1): 
+        curpos = ((curpos[0]),(curpos[1])-1)
+        curnum -= 1
+        mat[curpos] = curnum 
+    if cardinality == 'west' and curpos[0]+1 == n:
+        cardinality = 'north'
+        
+    #If we are going north
+    while(cardinality == 'north' and curpos[0]-1 != -1 and mat[(curpos[0]-1),(curpos[1])] == -1): 
+        curpos = ((curpos[0]-1),(curpos[1]))
+        curnum -= 1
+        mat[curpos] = curnum 
+    if cardinality == '' and curpos[0]-1 == n: #and mat[(curpos[0]-1),(curpos[1])] != -1
+        cardinality = 'east'
+        
+    print("After:\n",mat, "\n")
     
 spiral(8,1)
     
