@@ -3,20 +3,6 @@
 Created on Wed Feb 19 13:24:25 2020
 
 @author: jubco
-
-II. Power Set
-The power set is the set of all possible subsets for a set. Please provide an implementation of
-power set as follows:
-1) Function: powerset(List)
-2) Example output: powerset([1,2,3]) = [[1,2,3], [1,2], [1,3], [2,3], [1], [2], [3], []]
-III. All Permutations
-Please implement a function which will produce all permutations of a list as follows:
-1) Function: all_perms(List)
-2) Example output: all_perms([1,2,3]) = [[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1]]
-IV. Number Spiral
-Given a number n and ending corner (1, 2, 3, or 4), print a number spiral with 0 in the middle
-and n^2 – 1 in the ending corner, which spirals in the clockwise direction. Here’s an example for
-n = 8 ending in corner 2:
 """
 
 def flatten(listBoi, memory=[]):
@@ -33,26 +19,24 @@ print("Flatten on example: ", flatten([[1,2,3], [[4],[5]], 6,7,8]))
 
 from itertools import chain, combinations
 # https://stackoverflow.com/questions/1482308/how-to-get-all-subsets-of-a-set-powerset
-#TODO own
+
 def powSet(setBoi):  
-    return list(chain.from_iterable(combinations(setBoi, r) for r in range(len(setBoi)+1)))
+    return list(chain.from_iterable(combinations(setBoi, p) for p in range(len(setBoi)+1)))
     
 print("\nPowerset of 1 2 3: ", powSet([1,2,3])) 
 ############################################################################
 
-#https://www.geeksforgeeks.org/permutation-and-combination-in-python/
-#TODO own
 from itertools import permutations
 
 def allPerms(listBoi):
-    result = list(permutations(listBoi))
-    
+    result = list(permutations(listBoi))  
     return(result)
 
-print("\nPermutations of 1 2 3: ", allPerms([1,2,3]))
+print("\nPermutations of 1 2 3: ", allPerms([1,2,3]), "\n")
 ############################################################################
 
 import numpy as np
+import math
 """
 use a list of lists
 We know where the last number will be because of the input, so work backwards from there
@@ -74,5 +58,43 @@ def spiral(n, end_corner):
         cur_pos = cur_pos + direction_vectors[cur_dirIndex %% 4] #mod 4
         cur_num -= 1
 """
-
+"""
+Must be clockwise!
+12
+34
+Cardinality is where you want to be heading
+"""
+def spiral(n, end_corner):
+    mat = np.full((n, n), -1)
+    curnum = (n**2)-1
+    if end_corner == 1:         #Upper Left
+        curpos = (0,0)
+        mat[curpos] = (n**2)-1
+        cardinality = 'east'
+    elif end_corner == 2:       #Upper Right
+        curpos = (0,n-1)
+        mat[curpos] = (n**2)-1
+        cardinality = 'south'
+    elif end_corner == 3:       #Lower Right
+        curpos = (n-1,n-1)
+        mat[curpos] = (n**2)-1
+        cardinality = 'west'
+    elif end_corner == 4:       #Lower left
+        curpos = (n-1,0)
+        mat[curpos] = (n**2)-1
+        cardinality = 'north'
+    else:
+        print("Incorrect input, end_corner must be between 1 and 4")
+        return 0
+        
+    print(mat, "\n")
+    
+    while(cardinality == 'east' and mat[(curpos[0])(curpos[1])+1 == -1]):
+        curpos = mat[(curpos[0])(curpos[1])+1 == -1]
+        curnum -= 1
+        mat[curpos] = curnum 
+    
+    print(mat, "\n")
+    
+spiral(8,1)
     
