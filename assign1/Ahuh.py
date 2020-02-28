@@ -26,7 +26,7 @@ def powSet(setBoi):
 print("\nPowerset of 1 2 3: ", powSet([1,2,3])) 
 ############################################################################
 
-from itertools import permutations
+from itertools import permutations #I knew about the import already so i just used that
 
 def allPerms(listBoi):
     result = list(permutations(listBoi))  
@@ -36,34 +36,7 @@ print("\nPermutations of 1 2 3: ", allPerms([1,2,3]), "\n")
 ############################################################################
 
 import numpy as np
-import math
-"""
-use a list of lists
-We know where the last number will be because of the input, so work backwards from there
-make your matrix a bunch of -1's and then overwrite them as ou're moving, this way you can tell when to change direction because you'll either hit null or a non -1 number.
 
-#0 always in middle, always end at end_corner
-def spiral(n, end_corner):
-    cur_num = (n**2)-1
-    cur_pos = (0, n-1)
-    ### TODO cur_dirIndex = <choose based on starting corner>
-    matrx = np.initialize(n,n,-1)
-   
-    direction_vectors = [(1,0),(0,-1),(0,1),(-1,0)]
-   
-    while cur_num >= 0:
-        matrx[cur_pos] = cur_num
-        if (change_dir(mat, curpos)):
-            cur_dirIndex += 1
-        cur_pos = cur_pos + direction_vectors[cur_dirIndex %% 4] #mod 4
-        cur_num -= 1
-"""
-"""
-Must be clockwise!
-12
-34
-Cardinality is where you want to be heading
-"""
 def spiral(n, end_corner):
     mat = np.full((n, n), -1)
     curnum = (n**2)-1
@@ -86,44 +59,46 @@ def spiral(n, end_corner):
     else:
         print("Incorrect input, end_corner must be between 1 and 4")
         return 0
-        
-    print("Before:\n", mat, "\n")
     
-    #TODO put this entire setup into a while loop that makes sure there are no '-1's in the matrix
-    #If we are going right, keep decrementing to the right until you hit the last col or a non -1
-    while(cardinality == 'east' and curpos[1]+1 != n and mat[(curpos[0]),(curpos[1])+1] == -1): 
-        curpos = ((curpos[0]),(curpos[1])+1)
-        curnum -= 1
-        mat[curpos] = curnum 
-    #Change direction, TODO put this into a helper function to clean up code
-    if cardinality == 'east' and curpos[1]+1 == n:
-        cardinality = 'south'
-        
-    #If we are going south
-    while(cardinality == 'south' and curpos[0]+1 != n and mat[(curpos[0]+1),(curpos[1])] == -1): 
-        curpos = ((curpos[0])+1,(curpos[1]))
-        curnum -= 1
-        mat[curpos] = curnum 
-    if cardinality == 'south' and curpos[0]+1 == n:
-        cardinality = 'west'
-        
-    #If we are going west
-    while(cardinality == 'west' and curpos[1]-1 != -1 and mat[(curpos[0]),(curpos[1]-1)] == -1): 
-        curpos = ((curpos[0]),(curpos[1])-1)
-        curnum -= 1
-        mat[curpos] = curnum 
-    if cardinality == 'west' and curpos[0]+1 == n:
-        cardinality = 'north'
-        
-    #If we are going north
-    while(cardinality == 'north' and curpos[0]-1 != -1 and mat[(curpos[0]-1),(curpos[1])] == -1): 
-        curpos = ((curpos[0]-1),(curpos[1]))
-        curnum -= 1
-        mat[curpos] = curnum 
-    if cardinality == '' and curpos[0]-1 == n: #and mat[(curpos[0]-1),(curpos[1])] != -1
-        cardinality = 'east'
-        
-    print("After:\n",mat, "\n")
+    for i in range(n):
+        #If we are going right, keep decrementing to the right until you hit the last col or a non -1
+        while(cardinality == 'east' and curpos[1]+1 != n and mat[(curpos[0]),(curpos[1])+1] == -1): 
+            curpos = ((curpos[0]),(curpos[1])+1)
+            curnum -= 1
+            mat[curpos] = curnum 
+        #Change direction
+        if cardinality == 'east':
+            if curpos[1]+1 == n or (mat[(curpos[0]),(curpos[1]+1)] != -1):
+                cardinality = 'south'
+            
+        #If we are going south
+        while(cardinality == 'south' and curpos[0]+1 != n and mat[(curpos[0]+1),(curpos[1])] == -1): 
+            curpos = ((curpos[0])+1,(curpos[1]))
+            curnum -= 1
+            mat[curpos] = curnum 
+        if cardinality == 'south':
+            if curpos[0]+1 == n or (mat[(curpos[0]+1),(curpos[1])] != -1):
+                cardinality = 'west'
+            
+        #If we are going west
+        while(cardinality == 'west' and curpos[1]-1 != -1 and mat[(curpos[0]),(curpos[1]-1)] == -1): 
+            curpos = ((curpos[0]),(curpos[1])-1)
+            curnum -= 1
+            mat[curpos] = curnum 
+        if cardinality == 'west':
+            if curpos[0]+1 == n or (mat[(curpos[0]),(curpos[1]-1)] != -1):
+                cardinality = 'north'
+            
+        #If we are going north
+        while(cardinality == 'north' and curpos[0]-1 != -1 and mat[(curpos[0]-1),(curpos[1])] == -1): 
+            curpos = ((curpos[0]-1),(curpos[1]))
+            curnum -= 1
+            mat[curpos] = curnum 
+        if cardinality == 'north':
+            if curpos[0]-1 == n or (mat[(curpos[0]-1),(curpos[1])] != -1):
+                cardinality = 'east'
+            
+    return mat
     
-spiral(8,1)
+print("Spiral:\n",spiral(10,4))
     
