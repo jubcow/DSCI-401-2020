@@ -8,9 +8,9 @@ Created on Wed Feb 19 13:24:25 2020
 def flatten(listBoi, memory=[]):
     for x in listBoi:           #for every element in the list
         if isinstance(x, list): #If it is another list, then:
-            flatten(x,memory)   #We repeat the last few steps in that list
+            flatten(x,memory)   #We repeat the last few steps on that list
         else:
-            memory.append(x)    #Other wise, we add it to our memory 
+            memory.append(x)    #Otherwise, we add it to our memory 
                 
     return memory
 
@@ -18,7 +18,6 @@ print("Flatten on example: ", flatten([[1,2,3], [[4],[5]], 6,7,8]))
 ############################################################################
 
 from itertools import chain, combinations
-# https://stackoverflow.com/questions/1482308/how-to-get-all-subsets-of-a-set-powerset
 
 def powSet(setBoi):  
     return list(chain.from_iterable(combinations(setBoi, p) for p in range(len(setBoi)+1)))
