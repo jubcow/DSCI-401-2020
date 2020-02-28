@@ -17,10 +17,13 @@ def flatten(listBoi, memory=[]):
 print("Flatten on example: ", flatten([[1,2,3], [[4],[5]], 6,7,8]))
 ############################################################################
 
-from itertools import chain, combinations
-
-def powSet(setBoi):  
-    return list(chain.from_iterable(combinations(setBoi, p) for p in range(len(setBoi)+1)))
+def powSet(setBoi):
+    if len(setBoi) > 0:             #If not an empty set
+        start = powSet(setBoi[:-1]) #split with recursion so you get everything minus the last element each recurse
+        #print("First: ", first)
+        return start + [elem + [setBoi[-1]] for elem in start] #Return every start + one of every element + last element
+    else:
+        return [[]]
     
 print("\nPowerset of 1 2 3: ", powSet([1,2,3])) 
 ############################################################################
