@@ -1,0 +1,3 @@
+Model Optimization - Lecture w/ KNN: https://umw.screencasthost.com/watch/cYfb32za9t
+
+Model Optimization - ipynb examples: https://umw.screencasthost.com/watch/cYfb0Pzztp
